@@ -1,7 +1,7 @@
 {
-  "name": "debijenkorf",
-  "version": "0.0.2",
-  "description": "account application",
+  "name": "who to follow box",
+  "version": "0.0.1",
+  "description": "twitter who to follow box written in Cycle.js",
   "main": "index.js",
   "scripts": {
     "clean": "rm -fr dist",
@@ -9,20 +9,19 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/kibin/debijenkorf.git"
+    "url": "git+https://github.com/kibin/cycle-example-who-to-follow.git"
   },
   "author": "kibin",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/kibin/debijenkorf/issues"
+    "url": "https://github.com/kibin/cycle-example-who-to-follow/issues"
   },
-  "homepage": "https://github.com/kibin/debijenkorf#readme",
+  "homepage": "https://github.com/kibin/cycle-example-who-to-follow#readme",
   "dependencies": {
     "@cycle/core": "^6.0.0-rc2",
     "@cycle/dom": "^8.0.0-rc2",
     "@cycle/fetch": "^4.0.0",
     "@cycle/history": "^1.1.0",
-    "@reactivex/rxjs": "^5.0.0-alpha.10",
     "hyperscript-helpers": "^2.0.2",
     "ramda": "^0.18.0",
     "rx": "^4.0.7"

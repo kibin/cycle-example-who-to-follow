@@ -1,3 +1,3 @@
-# Account-cycle
+# Who to follow box written in cycle.js
 
-Small single page application operating with account written in cycle.
+Toying around with streams in Cycle.js and Rx.js
