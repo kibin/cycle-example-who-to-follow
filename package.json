@@ -1,5 +1,5 @@
 {
-  "name": "who to follow box",
+  "name": "who-to-follow-box",
   "version": "0.0.1",
   "description": "twitter who to follow box written in Cycle.js",
   "main": "index.js",
