@@ -20,14 +20,30 @@ button
   color: #66757f
 
 .user
+  &-content
+    cursor: pointer
+    margin-right: 10px
+
+    &:hover
+      .user-name
+        color: #0084b4
+        text-decoration: underline
+
   &-pic
     width: 48px
     height: @width
     border-radius: 5px
     vertical-align: top
 
-  &-content
-    margin: 0 20px 0 10px
+  &-description
+    display: inline-block
+    width: 180px
+    margin-left: 20px
+    overflow: hidden
+    white-space: nowrap
+    text-overflow: ellipsis
+    text-decoration: none
+    color: #8899a6
     cursor: pointer
 
   &-name
@@ -42,3 +58,6 @@ button
 
   &-close
     float: right
+    border: none
+    color: #8899a6
+    background-color: #fff

@@ -50,15 +50,16 @@ function main({ DOM, HTTP, History }) {
 
         div(`.users`, [
           div(`.user`, [
-            img(`.user-pic`, {
-              src: R.prop(`avatar_url`, user)
-            }),
+            a(`.user-content`, { href: R.prop(`html_url`, user) }, [
+              img(`.user-pic`, { src: R.prop(`avatar_url`, user) }),
 
-            span(`.user-content`, [
-              span(`.user-name`, R.prop(`name`, user)),
-              a(`.user-nick`, { href: R.prop(`html_url`, user) }, `@` + R.prop(`login`, user)),
-              button(`.user-close`, `Ø`),
+              span(`.user-description`, [
+                span(`.user-name`, R.prop(`name`, user)),
+                span(`.user-nick`, `@` + R.prop(`login`, user)),
+              ]),
             ]),
+
+            button(`.user-close`, `✕`),
           ]),
         ]),
       ]),
