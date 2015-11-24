@@ -5,7 +5,6 @@ import Rx from 'rx'
 import R from 'ramda'
 import { run } from '@cycle/core'
 import { makeDOMDriver, div, button, span, img, a } from '@cycle/dom'
-import { makeHistoryDriver } from '@cycle/history'
 import { makeFetchDriver } from '@cycle/fetch'
 
 import { getJSON } from 'helpers/fetch'
@@ -13,7 +12,7 @@ import { rand, randVals } from 'helpers/common'
 import { loaderWrapper } from 'helpers/loader'
 
 
-function main({ DOM, HTTP, History }) {
+function main({ DOM, HTTP }) {
   const users = `https://api.github.com/users`;
 
   const refresh$ = DOM.select(`.refresh`).events(`click`);
@@ -72,5 +71,4 @@ function main({ DOM, HTTP, History }) {
 run(main, {
   DOM: makeDOMDriver(`#content`),
   HTTP: makeFetchDriver(),
-  History: makeHistoryDriver(),
 });

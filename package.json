@@ -21,7 +21,6 @@
     "@cycle/core": "^6.0.0-rc2",
     "@cycle/dom": "^8.0.0-rc2",
     "@cycle/fetch": "^4.0.0",
-    "@cycle/history": "^1.1.0",
     "ramda": "^0.18.0",
     "rx": "^4.0.7"
   },
