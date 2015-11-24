@@ -4,16 +4,14 @@ import './index.styl'
 import Rx from 'rx'
 import R from 'ramda'
 import { run } from '@cycle/core'
-import { makeDOMDriver } from '@cycle/dom'
+import { makeDOMDriver, div, button, span, img, a } from '@cycle/dom'
 import { makeHistoryDriver } from '@cycle/history'
 import { makeFetchDriver } from '@cycle/fetch'
 
-import tags from 'helpers/dom'
 import { getJSON } from 'helpers/fetch'
 import { rand, randVals } from 'helpers/common'
 import { loaderWrapper } from 'helpers/loader'
 
-const { div, button, span, img, a } = tags;
 
 function main({ DOM, HTTP, History }) {
   const users = `https://api.github.com/users`;
