@@ -1,3 +1,4 @@
+import { splitEvery, map, length } from 'ramda'
 import { div, button } from '@cycle/dom'
 
 import { getJSON } from 'helpers/fetch'
@@ -26,8 +27,8 @@ const view = state$ => state$
         button(`.refresh`, `Refresh`),
       ]),
 
-      div(`.users`, [
-      ]),
+      div(`.usrs`, map(usrs => div(JSON.stringify(map(x => x.login, usrs), null, `  `)),
+                       splitEvery(Math.ceil(length(users) / 3), users))),
     ]),
   ))
 
@@ -35,6 +36,8 @@ const view = state$ => state$
 export function Box({ DOM, HTTP }) {
   const state$ = model(HTTP)
   const actions = intent(DOM)
+  // get a stream of three user dfcs
+  // merge their requests to HTTP
 
   return {
     state$,
