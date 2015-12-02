@@ -16,7 +16,13 @@ function main(sources) {
   }
 }
 
-run(main, {
+const { sinks, sources } = run(main, {
   DOM: makeDOMDriver(`#content`),
   HTTP: makeFetchDriver(),
 })
+
+if (module.hot) {
+  module.hot.accept()
+
+  module.hot.dispose(_ => (sinks.dispose(), sources.dispose()))
+}
