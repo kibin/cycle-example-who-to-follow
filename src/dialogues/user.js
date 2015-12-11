@@ -12,11 +12,11 @@ const intent = DOM => ({
 const request = ({ close$ }, props$) => close$
   .map((_, idx) => idx)
   .withLatestFrom(props$, (idx, users) => users[idx] || {})
-  .map(({ url }) => url ? ({
+  .map(({ url }) => url ? {
     url,
     key: `user`,
     headers: { Authorization: `Basic a2liaW46MjhlZWQ5MmYyODM1NzYwNTY2MGQyNTc2MWJiMjMyOTVlYzk4Y2ZlNw==` }
-  }) : {})
+  } : {})
 
 const model = HTTP =>
   getJSON({ key: `user` }, HTTP)
@@ -38,8 +38,8 @@ const view = state$ => state$
   )
 
 export function User({ DOM, HTTP, props$ }) {
-  const state$ = model(HTTP)
   const actions = intent(DOM)
+  const state$ = model(HTTP)
 
   return {
     state$,

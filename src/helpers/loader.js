@@ -1,7 +1,7 @@
 import { div } from '@cycle/dom'
-import R from 'ramda'
+import { head } from 'ramda'
 
-export function loaderWrapper(domFn, handler=R.head) {
+export function loaderWrapper(domFn, handler = head) {
   const loader = div(`.loader`, `Loading...`);
 
   return (...dataArgs) =>

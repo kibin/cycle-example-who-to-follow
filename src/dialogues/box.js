@@ -53,7 +53,7 @@ export function Box({ DOM, HTTP }) {
 
   return {
     state$,
-    DOM: view(state$),
+    DOM: view(state$.startWith(null)),
     HTTP: request(actions).merge(requests$),
   }
 }
