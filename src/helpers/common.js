@@ -1,13 +1,31 @@
-import R from 'ramda'
+import {
+  __,
+  adjust,
+  compose,
+  curry,
+  equals,
+  head,
+  join,
+  keys,
+  length,
+  map,
+  nth,
+  path,
+  times,
+  toUpper,
+  values,
+} from 'ramda'
 
-export const firstKey = R.compose(R.head, R.keys)
-export const firstVal = R.compose(R.head, R.values)
-export const capitalize = R.compose(R.join(``), R.adjust(R.toUpper, 0))
+export const firstKey = compose(head, keys)
+export const firstVal = compose(head, values)
+export const capitalize = compose(join(``), adjust(toUpper, 0))
 export const rand = (max, min = 0) =>
   Math.floor(Math.random() * max) + min
-export const randVals = R.curry((amount, list) => {
-  const len = R.length(list);
-  const ids = R.times(x => rand(len), amount);
+export const randVals = curry((amount, list) => {
+  const len = length(list);
+  const ids = times(x => rand(len), amount);
 
-  return R.map(R.nth(R.__, list), ids);
-});
+  return map(nth(__, list), ids);
+})
+export const eqToProp = (pathname, to) =>
+  compose(equals(to), path(pathname))

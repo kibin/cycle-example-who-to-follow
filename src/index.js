@@ -3,7 +3,7 @@ import './index.styl'
 
 import { run } from '@cycle/core'
 import { makeDOMDriver } from '@cycle/dom'
-import { makeFetchDriver } from '@cycle/fetch'
+import { makeHTTPDriver } from '@cycle/http'
 
 import { Box } from 'dialogues/box'
 
@@ -18,7 +18,7 @@ function main(sources) {
 
 const { sinks, sources } = run(main, {
   DOM: makeDOMDriver(`#content`),
-  HTTP: makeFetchDriver(),
+  HTTP: makeHTTPDriver(),
 })
 
 if (module.hot) {

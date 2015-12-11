@@ -20,7 +20,7 @@
   "dependencies": {
     "@cycle/core": "^6.0.0-rc2",
     "@cycle/dom": "^8.0.0-rc3",
-    "@cycle/fetch": "^4.0.0",
+    "@cycle/http": "^7.0.0-rc2",
     "@cycle/isolate": "^1.1.1",
     "ramda": "^0.18.0",
     "rx": "^4.0.7"

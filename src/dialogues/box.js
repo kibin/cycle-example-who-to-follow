@@ -1,4 +1,4 @@
-import { splitEvery, map, length, prop, compose } from 'ramda'
+import { splitEvery, map, length, prop, compose, identity } from 'ramda'
 import { div, button } from '@cycle/dom'
 import { Observable } from 'rx'
 import isolate from '@cycle/isolate'
@@ -13,7 +13,7 @@ const init = {
 }
 
 const USERS_COUNT = 3
-const getHTTPObservables = compose(map(prop(`HTTP`), prop(`users`)))
+const getHTTPObservables = compose( map(prop(`HTTP`), prop(`users`)))
 
 const intent = DOM => ({
   refresh$: DOM.select(`.refresh`).events(`click`).startWith(`initial`),
@@ -54,11 +54,14 @@ export function Box({ DOM, HTTP }) {
   const state$ = model(HTTP)
   const actions = intent(DOM)
   const newState$ = state$.map(usersState(DOM, HTTP))
-  const requests$ = newState$.map(getHTTPObservables)
+  const requests$ = newState$
+    .map(users => Observable.from(getHTTPObservables(users)))
+    .flatMap(identity)
+    .tap(a => console.log(a))
 
   return {
     state$,
     DOM: view(newState$),
-    HTTP: request(actions)//.merge(requests$),
+    HTTP: request(actions).merge(requests$),
   }
 }
