@@ -1,24 +1,22 @@
 import { prop } from 'ramda'
 import { div, button, span, img, a } from '@cycle/dom'
+import { Observable } from 'rx'
 
 import { getJSON } from 'helpers/fetch'
 
-const init = {
-  headers: { Authorization: `Basic a2liaW46MjhlZWQ5MmYyODM1NzYwNTY2MGQyNTc2MWJiMjMyOTVlYzk4Y2ZlNw==` }
-}
-
 const intent = DOM => ({
-  close$: DOM.select(`.user-close`).events(`click`),
+  close$: DOM.select(`.user-close`).events(`click`)
+    .startWith(`initial`),
 })
 
 const request = ({ close$ }, props$) => close$
   .map((_, idx) => idx)
-  .withLatestFrom(props$, (idx, users) => users[idx])
-  .map(({ url }) => ({
+  .withLatestFrom(props$, (idx, users) => users[idx] || {})
+  .map(({ url }) => url ? ({
     url,
     key: `user`,
-    init,
-  }))
+    headers: { Authorization: `Basic a2liaW46MjhlZWQ5MmYyODM1NzYwNTY2MGQyNTc2MWJiMjMyOTVlYzk4Y2ZlNw==` }
+  }) : {})
 
 const model = HTTP =>
   getJSON({ key: `user` }, HTTP)

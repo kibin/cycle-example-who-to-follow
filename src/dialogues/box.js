@@ -8,12 +8,8 @@ import { rand } from 'helpers/common'
 import { loaderWrapper } from 'helpers/loader'
 import { User } from './user'
 
-const init = {
-  headers: { Authorization: `Basic a2liaW46MjhlZWQ5MmYyODM1NzYwNTY2MGQyNTc2MWJiMjMyOTVlYzk4Y2ZlNw==` }
-}
-
 const USERS_COUNT = 3
-const getHTTPObservables = compose( map(prop(`HTTP`), prop(`users`)))
+const getHTTPObservables = compose(Observable.merge, map(prop(`HTTP`)), prop(`users`))
 
 const intent = DOM => ({
   refresh$: DOM.select(`.refresh`).events(`click`).startWith(`initial`),
@@ -23,7 +19,7 @@ const request = ({ refresh$ }) => refresh$
   .map(_ => ({
     url: `https://api.github.com/users?since=${rand(500)}`,
     key: `users`,
-    init,
+    headers: { Authorization: `Basic a2liaW46MjhlZWQ5MmYyODM1NzYwNTY2MGQyNTc2MWJiMjMyOTVlYzk4Y2ZlNw==` }
   }))
 
 const model = HTTP =>
@@ -32,14 +28,14 @@ const model = HTTP =>
 
 const view = state$ => state$
   .map(loaderWrapper(({ users }) =>
-    div(`.content`, [console.log(users),
+    div(`.content`, [
       div(`.header`, [
         `Who to follow`,
         ` · `,
         button(`.refresh`, `Refresh`),
       ]),
 
-      div(`.usrs`, `LOL~`)
+      div(`.users`, map(prop(`DOM`), users)),
     ]),
   ))
 
@@ -51,17 +47,13 @@ const usersState = (DOM, HTTP) =>
   })
 
 export function Box({ DOM, HTTP }) {
-  const state$ = model(HTTP)
   const actions = intent(DOM)
-  const newState$ = state$.map(usersState(DOM, HTTP))
-  const requests$ = newState$
-    .map(users => Observable.from(getHTTPObservables(users)))
-    .flatMap(identity)
-    .tap(a => console.log(a))
+  const state$ = model(HTTP).map(usersState(DOM, HTTP)).shareReplay(1)
+  const requests$ = state$.flatMapLatest(getHTTPObservables)
 
   return {
     state$,
-    DOM: view(newState$),
+    DOM: view(state$),
     HTTP: request(actions).merge(requests$),
   }
 }
