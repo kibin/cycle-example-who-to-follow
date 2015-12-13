@@ -19,7 +19,7 @@
   "homepage": "https://github.com/kibin/cycle-example-who-to-follow#readme",
   "dependencies": {
     "@cycle/core": "^6.0.0-rc2",
-    "@cycle/dom": "^8.0.0-rc3",
+    "@cycle/dom": "^8.0.0-rc5",
     "@cycle/http": "^7.0.0-rc2",
     "@cycle/isolate": "^1.1.1",
     "ramda": "^0.18.0",
