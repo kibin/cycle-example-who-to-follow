@@ -1,9 +1,16 @@
-import { div } from '@cycle/dom'
+import { div, span } from '@cycle/dom'
 import { head } from 'ramda'
 
-export function loaderWrapper(domFn, handler = head) {
-  const loader = div(`.loader`, `Loading...`);
+export function handleView(handler, loader, dom) {
+  const defaultLoader = div(`.loader`, `Loading...`)
 
-  return (...dataArgs) =>
-    handler(dataArgs) ? domFn(...dataArgs) : loader;
+  return (...data) => {
+    const result = handler(...data)
+
+    if (result === null) return span()
+
+    if (result === false) return loader || defaultLoader
+
+    return dom(...data)
+  }
 }

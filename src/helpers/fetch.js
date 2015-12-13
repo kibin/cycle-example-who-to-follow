@@ -9,7 +9,6 @@ export function getJSON(by, request$) {
 }
 
 function getJSONHTTP(by, request$) {
-  console.log()
   return request$
     .filter(eqToProp([`request`, firstKey(by)], firstVal(by)))
     .mergeAll()

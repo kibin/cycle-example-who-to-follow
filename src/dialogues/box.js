@@ -8,26 +8,41 @@ import { rand } from 'helpers/common'
 import { loaderWrapper } from 'helpers/loader'
 import { User } from './user'
 
-const USERS_COUNT = 3
-const getHTTPObservables = compose(Observable.merge, map(prop(`HTTP`)), prop(`users`))
+const SUGGESTIONS_COUNT = 3
+const getHTTPObservables = compose(Observable.merge, map(prop(`HTTP`)))
+const splitUsers = users =>
+  splitEvery(Math.ceil(length(users) / SUGGESTIONS_COUNT), users)
+
+const request = actions => actions.refresh$
+  .map(_ => ({
+    url: `https://api.github.com/users?since=${rand(50000)}`,
+    key: `users`,
+    headers: { Authorization: `Basic a2liaW46MjhlZWQ5MmYyODM1NzYwNTY2MGQyNTc2MWJiMjMyOTVlYzk4Y2ZlNw==` }
+  }))
+
+const usersState = (DOM, HTTP) =>
+  users => length(users)
+    ? map(users => isolate(User)({
+      DOM,
+      HTTP,
+      props$: Observable.just({ users })
+    }), splitUsers(users))
+    : []
 
 const intent = DOM => ({
   refresh$: DOM.select(`.refresh`).events(`click`).startWith(`initial`),
 })
 
-const request = ({ refresh$ }) => refresh$
-  .map(_ => ({
-    url: `https://api.github.com/users?since=${rand(500)}`,
-    key: `users`,
-    headers: { Authorization: `Basic a2liaW46MjhlZWQ5MmYyODM1NzYwNTY2MGQyNTc2MWJiMjMyOTVlYzk4Y2ZlNw==` }
-  }))
-
-const model = HTTP =>
-  getJSON({ key: `users` }, HTTP)
-    .map(users => splitEvery(Math.ceil(length(users) / USERS_COUNT), users))
+const model = (actions, HTTP) =>
+  Observable.combineLatest(
+    getJSON({ key: `users` }, HTTP),
+    actions.refresh$,
+    identity,
+  )
+  .scan((prev, next) => length(prev) && prev[0].id == next[0].id ? [] : next)
 
 const view = state$ => state$
-  .map(loaderWrapper(({ users }) =>
+  .map(users =>
     div(`.content`, [
       div(`.header`, [
         `Who to follow`,
@@ -35,20 +50,15 @@ const view = state$ => state$
         button(`.refresh`, `Refresh`),
       ]),
 
-      div(`.users`, map(prop(`DOM`), users)),
+      length(users)
+        ? div(`.users`, map(prop(`DOM`), users))
+        : div(`.loader`, `Loading...`)
     ]),
-  ))
-
-const usersState = (DOM, HTTP) =>
-  usersChunks => ({
-    users: usersChunks.map(users =>
-      isolate(User)({ DOM, HTTP, props$: Observable.just(users) })
-    ),
-  })
+  )
 
 export function Box({ DOM, HTTP }) {
   const actions = intent(DOM)
-  const state$ = model(HTTP).map(usersState(DOM, HTTP)).shareReplay(1)
+  const state$ = model(actions, HTTP).map(usersState(DOM, HTTP)).shareReplay(1)
   const requests$ = state$.flatMapLatest(getHTTPObservables)
 
   return {

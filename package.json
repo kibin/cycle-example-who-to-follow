@@ -1,6 +1,6 @@
 {
   "name": "who-to-follow-box",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "twitter who to follow box written in Cycle.js",
   "main": "index.js",
   "scripts": {

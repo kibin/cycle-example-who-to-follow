@@ -1,4 +1,3 @@
-/* @flow */
 import './index.styl'
 
 import { run } from '@cycle/core'
