@@ -7,6 +7,7 @@ import { getJSON } from 'helpers/fetch'
 import { rand } from 'helpers/common'
 import { loaderWrapper } from 'helpers/loader'
 import { User } from './user'
+import auth from 'helpers/auth'
 
 const SUGGESTIONS_COUNT = 3
 const getHTTPObservables = compose(Observable.merge, map(prop(`HTTP`)))
@@ -17,7 +18,7 @@ const request = actions => actions.refresh$
   .map(_ => ({
     url: `https://api.github.com/users?since=${rand(50000)}`,
     key: `users`,
-    headers: { Authorization: `Basic a2liaW46MjhlZWQ5MmYyODM1NzYwNTY2MGQyNTc2MWJiMjMyOTVlYzk4Y2ZlNw==` }
+    headers: auth
   }))
 
 const usersState = (DOM, HTTP) =>

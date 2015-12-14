@@ -4,6 +4,7 @@ import { Observable } from 'rx'
 
 import { getJSON } from 'helpers/fetch'
 import { handleView } from 'helpers/loader'
+import auth from 'helpers/auth'
 
 const checkForNewUser = (prev, next) => {
   if (!length(propOr([], `users`, next))) return null
@@ -19,7 +20,7 @@ const request = (actions, props$) => actions.close$
   .map(user => user ? {
     url: user.url,
     key: `user`,
-    headers: { Authorization: `Basic a2liaW46MjhlZWQ5MmYyODM1NzYwNTY2MGQyNTc2MWJiMjMyOTVlYzk4Y2ZlNw==` }
+    headers: auth
   } : {})
 
 const intent = DOM => ({

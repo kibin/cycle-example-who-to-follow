@@ -1,8 +1,6 @@
-import { prop, propOr } from 'ramda'
+import { prop } from 'ramda'
 
-import {
-  firstKey, firstVal, eqToProp
-} from './common'
+import { firstKey, firstVal, eqToProp } from './common'
 
 export function getJSON(by, request$) {
   return getJSONHTTP(by, request$)
@@ -15,6 +13,7 @@ function getJSONHTTP(by, request$) {
     .map(prop(`body`))
 }
 
+// use it with cycle fetch driver
 function getJSONFetch(by, request$) {
   const type = capitalize(firstKey(by))
 
