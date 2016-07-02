@@ -1,6 +1,6 @@
 import './index.styl'
 
-import { run } from '@cycle/core'
+import { run } from '@cycle/rx-run'
 import { makeDOMDriver } from '@cycle/dom'
 import { makeHTTPDriver } from '@cycle/http'
 
@@ -16,7 +16,7 @@ function main(sources) {
 }
 
 const { sinks, sources } = run(main, {
-  DOM: makeDOMDriver(`#content`),
+  DOM: makeDOMDriver(`#content`, { transposition: true }),
   HTTP: makeHTTPDriver(),
 })
 
