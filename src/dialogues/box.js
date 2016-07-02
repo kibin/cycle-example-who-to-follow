@@ -17,7 +17,7 @@ const splitUsers = users =>
 const request = actions => actions.refresh$
   .map(_ => ({
     url: `https://api.github.com/users?since=${rand(50000)}`,
-    key: `users`,
+    category: `users`,
     headers: auth
   }))
 
@@ -36,7 +36,7 @@ const intent = DOM => ({
 
 const model = (actions, HTTP) =>
   Observable.combineLatest(
-    getJSON({ key: `users` }, HTTP),
+    getJSON(`users`, HTTP),
     actions.refresh$,
     identity,
   )

@@ -2,8 +2,11 @@ import { prop } from 'ramda'
 
 import { firstKey, firstVal, eqToProp } from './common'
 
-export function getJSON(by, request$) {
-  return getJSONHTTP(by, request$)
+export function getJSON(by, HTTP) {
+  return HTTP
+    .select(by)
+    .mergeAll()
+    .map(prop(`body`))
 }
 
 function getJSONHTTP(by, request$) {

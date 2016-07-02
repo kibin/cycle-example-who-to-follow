@@ -19,7 +19,7 @@
   "homepage": "https://github.com/kibin/cycle-example-who-to-follow#readme",
   "dependencies": {
     "@cycle/dom": "^10.0.5",
-    "@cycle/http": "^7.0.0",
+    "@cycle/http": "^9.0.2",
     "@cycle/isolate": "^1.4.0",
     "@cycle/rx-run": "^7.0.0",
     "autoprefixer": "^6.2.1",
