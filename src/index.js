@@ -16,7 +16,7 @@ function main(sources) {
 }
 
 const { sinks, sources } = run(main, {
-  DOM: makeDOMDriver(`#content`),
+  DOM: makeDOMDriver(`#content`, { transposition: true }),
   HTTP: makeHTTPDriver(),
 })
 

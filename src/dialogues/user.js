@@ -47,8 +47,8 @@ const view = state$ => state$
     div(`.user-loader`, `Loading...`),
     user =>
       div(`.user`, [
-        a(`.user-content`, { href: prop(`html_url`, user) }, [
-          img(`.user-pic`, { src: prop(`avatar_url`, user) }),
+        a(`.user-content`, { props: { href: prop(`html_url`, user) } }, [
+          img(`.user-pic`, { props: { src: prop(`avatar_url`, user) } }),
 
           span(`.user-description`, [
             span(`.user-name`, prop(`name`, user)),
