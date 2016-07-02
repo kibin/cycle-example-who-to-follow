@@ -18,10 +18,10 @@
   },
   "homepage": "https://github.com/kibin/cycle-example-who-to-follow#readme",
   "dependencies": {
-    "@cycle/core": "^6.0.0",
     "@cycle/dom": "^10.0.5",
     "@cycle/http": "^7.0.0",
     "@cycle/isolate": "^1.1.1",
+    "@cycle/rx-run": "^7.0.0",
     "autoprefixer": "^6.2.1",
     "ramda": "^0.18.0",
     "rx": "^4.0.7",
